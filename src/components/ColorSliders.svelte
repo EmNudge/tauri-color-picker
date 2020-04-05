@@ -1,32 +1,16 @@
 <script>
-  import ColorSlider from './ColorSlider.svelte';
+  import IterButton from './IterButton.svelte';
+  import HslSliders from './color-sliders/HslSliders.svelte';
+  import RgbSliders from './color-sliders/RgbSliders.svelte';
 
-  export let r = 0;
-  export let g = 0;
-  export let b = 0;
-
-  let h = 0;
-  let s = 0;
-  let l = 0;
-
-  const hueBg = (() => {
-    const colors = Array(10)
-      .fill(null)
-      .map((_, i, arr) => `hsl(${360/(arr.length - 1) * i}, 100%, 50%)`)
-    
-    return `linear-gradient(to right, ${colors.join(', ')})`;
-  })()
+  let mode = 'rgb';
 </script>
 
 <div class="colors">
-  <div class="mode-selector">
-  </div>
-  <div class="rgb">
-    <ColorSlider color="#ff5739" bind:value={r} />
-    <ColorSlider color="#41a5e1" bind:value={g} />
-    <ColorSlider color="#69c33d" bind:value={b} />
-  </div>
-  <div class="hsl">
-    <ColorSlider color={hueBg} range={[0, 360]} bind:value={h} />
-  </div>
+  <IterButton arr={['hsl', 'rgb']} bind:value={mode} />
+  {#if mode === 'hsl'}
+    <HslSliders />
+  {:else if mode === 'rgb'}
+    <RgbSliders />
+  {/if}
 </div>

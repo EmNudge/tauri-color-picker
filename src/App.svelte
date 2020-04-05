@@ -30,9 +30,9 @@
 </script>
 
 <main>
-	<ColorSliders bind:r={$r} bind:g={$g} bind:b={$b} />
+	<ColorSliders/>
 
-	<Output bind:r={$r} bind:g={$g} bind:b={$b} />
+	<Output />
 </main>
 
 <style>

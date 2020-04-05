@@ -28,7 +28,7 @@
 <style>
   div {
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr 80px;
     grid-gap: 10px;
   }
 </style>

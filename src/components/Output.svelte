@@ -1,42 +1,32 @@
 <script>
   import Input from './Input.svelte';
-  import { rgbToHsl, rgbToHex } from '../utils/color'
+  import { rgbToHsl, rgbToHex, getRgbFromString } from '../utils/color'
   import IterButton from './IterButton.svelte';
-
-  export let r = 0;
-  export let g = 0;
-  export let b = 0;
+  import { r, g, b } from '../stores/color';
 
   let color = 'rgb(0, 0, 0)';
   let mode = 'rgb';
   $: {
     if (mode === 'hex') {
-      color = rgbToHex(r, g, b);
+      color = rgbToHex($r, $g, $b);
     } else if (mode === 'rgb') {
-      color = `rgb(${r}, ${g}, ${b})`;
+      color = `rgb(${$r}, ${$g}, ${$b})`;
     } else {
-      const { h, s, l } = rgbToHsl(r, g, b);
-      color = `hsl(${h}, ${s}%, ${l}%)`;
+      const { h, s, l } = rgbToHsl($r, $g, $b);
+      color = `hsl(${h % 360}, ${s}%, ${l}%)`;
     }
   }
 
-  function checkResult() {
-    console.log('result checking')
+  function checkResult(e) {
+    const col = e.target.value;
 
-    if (mode === 'rgb') {
-      // first check if it's in a valid format
-      const rgbRegepChecker = /rgb\( *\d+ *, *\d+ *, *\d+ *\)/;
-      const isFormatted = Boolean(color.match(rgbRegepChecker));
-      if (!isFormatted) return;
-
-      // then we extract the colors
-      const cols = [...color.match(/\d+/g)].map(n => Number(n));
-      const [red, green, blue] = cols;
-      // and finally update colors
-      r = red;
-      g = green;
-      b = blue;
-    } 
+    const rgb = getRgbFromString(col, mode);
+    if (!rgb) return;
+    
+    const { r: red, g: green, b: blue } = rgb;
+    $r = red;
+    $g = green;
+    $b = blue;
   }
 </script>
 
