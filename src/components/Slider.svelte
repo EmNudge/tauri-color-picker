@@ -1,0 +1,75 @@
+<script>
+  export let color;
+  export let value;
+  
+  let sliderEl;
+  let pos = value;
+  let isDragging = false;
+
+  function handleMouseDown(e) {
+    isDragging = true;
+    updatePos(e);
+  }
+  function handleMouseUp() {
+    isDragging = false;
+  }
+
+  function handleHover(e) {
+    if (!isDragging) return;
+
+    updatePos(e);
+  }
+
+  function updatePos(e) {
+    const HANDLE_WIDTH = 20;
+
+    const mousePos = e.clientX - HANDLE_WIDTH/2 - sliderEl.offsetLeft;
+    const totalWidth = sliderEl.offsetWidth;
+    const percentage = mousePos / totalWidth;
+    const clampedPerc = Math.max(Math.min(percentage * 100, 100), 0);
+
+    value = pos = clampedPerc;
+  }
+</script>
+
+<svelte:window on:mousemove={handleHover} on:mouseup={handleMouseUp} />
+
+<style>
+  .slider {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .handle {
+    background: white;
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    margin-right: 10px; 
+
+    position: relative;
+  }
+
+  .bg-container {
+    position: absolute;
+    top: 0; left: 0; 
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    z-index: -1;
+  }
+  .bg {
+    height: 10px;
+    width: 100%;
+    border-radius: 10px;
+  }
+</style>
+
+<div class="slider" bind:this={sliderEl} on:mousedown={handleMouseDown}>
+  <div class="bg-container">
+    <div class="bg" style="background: {color}"></div>
+  </div>
+  <div class="handle" style="left: {pos}%"></div>
+</div>
