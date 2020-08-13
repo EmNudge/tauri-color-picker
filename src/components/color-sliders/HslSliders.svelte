@@ -1,20 +1,19 @@
 <script>
   import ColorSlider from '../ColorSlider.svelte';
-  import { ColorMaster } from '../../stores/color';
-  import { get } from 'svelte/store';
+  import { colorStore, setHsl } from '../../stores/color';
   
   let h;
   let s;
   let l;
   $: {
-    const hsl = get(ColorMaster.hsl);
+    const { hsl } = $colorStore;
     h = hsl.h;
     s = hsl.s;
     l = hsl.l;
   }
 
-  function updateColorMaster() {
-    ColorMaster.setHsl(h, s, l);
+  function updateColor() {
+    setHsl(h, s, l);
   }
 
   function getBg(gradients, func) {
@@ -31,7 +30,7 @@
 </script>
 
 <div class="hsl">
-  <ColorSlider color={hueBg} range={[0, 360]} bind:value={h} on:input={updateColorMaster} />
-  <ColorSlider color={satBg} range={[0, 100]} bind:value={s} on:input={updateColorMaster} />
-  <ColorSlider color={lightBg} range={[0, 100]} bind:value={l} on:input={updateColorMaster} />
+  <ColorSlider color={hueBg} range={[0, 360]} bind:value={h} on:input={updateColor} />
+  <ColorSlider color={satBg} range={[0, 100]} bind:value={s} on:input={updateColor} />
+  <ColorSlider color={lightBg} range={[0, 100]} bind:value={l} on:input={updateColor} />
 </div>

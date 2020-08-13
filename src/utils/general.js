@@ -28,3 +28,13 @@ export const roundStep = (val, step) => {
 
   return intRes / tenPower;
 }
+
+// doesn't do deep equality, but it tests if 2 objects have equal primitive values
+export const objEquals = (obj1, obj2) => {
+  if (typeof obj1 !== "object" || typeof obj2 !== "object") return false;
+  
+  for (const prop in obj1) {
+    if (obj1[prop] !== obj2[prop]) return false;
+  }
+  return true;
+}

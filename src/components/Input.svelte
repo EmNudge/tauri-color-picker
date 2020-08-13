@@ -1,4 +1,7 @@
 <script>
+  import restrictInput from "../actions/restrictInput";
+
+  export let restrictFunc = () => true;
   export let value;
 </script>
 
@@ -17,4 +20,4 @@
   }
 </style>
 
-<input type="text" bind:value on:input />
+<input type="text" bind:value on:input use:restrictInput={restrictFunc} />

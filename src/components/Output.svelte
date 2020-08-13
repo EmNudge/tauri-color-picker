@@ -2,16 +2,23 @@
   import Input from './Input.svelte';
   import { rgbToHsl, rgbToHex, getRgbFromString } from '../utils/color'
   import IterButton from './IterButton.svelte';
-  import { ColorMaster } from '../stores/color';
-import { derived } from 'svelte/store';
+  import { colorStore, setRgb } from '../stores/color';
+  import { objEquals } from '../utils/general';
 
   let color = 'rgb(0, 0, 0)';
   let mode = 'rgb';
   let rgb;
   let hsl;
+
+  let stopColorEdit = false;
   
+  let unsubscribe
   // note this will run twice when colors change.
-  ColorMaster.colors.subscribe(colors => {
+  colorStore.subscribe(colors => {
+    if (stopColorEdit) {
+      stopColorEdit = false;
+      return;
+    }
     rgb = colors.rgb;
     hsl = colors.hsl;
   });
@@ -29,14 +36,16 @@ import { derived } from 'svelte/store';
   }
 
   function checkResult(_e) {
-    const rgb = getRgbFromString(color);
-    if (!rgb) return;
+    const derivedRgb = getRgbFromString(_e.target.value);
+    if (!derivedRgb) return;
     
-    // do something
+    stopColorEdit = true;
+    const { r, g, b } = derivedRgb;
+    setRgb(r, g, b);
   }
 </script>
 
 <div class="output">
-  <Input bind:value={color} on:input={checkResult} />
+  <Input value={color} on:input={checkResult} />
   <IterButton bind:value={mode} arr={['hex', 'rgb', 'hsl']} />
 </div>

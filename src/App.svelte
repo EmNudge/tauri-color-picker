@@ -5,9 +5,11 @@
 	import { getRgbLightness, rgbToHex } from './utils/color';
 	import Output from './components/Output.svelte';
 	import ColorSliders from './components/ColorSliders.svelte';
-	import { ColorMaster } from './stores/color';
+	import { colorStore } from './stores/color';
 
-	ColorMaster.rgb.subscribe(({ r, g, b}) => {
+	colorStore.subscribe(color => {
+		const { r, g, b } = color.rgb;
+		
 		updateRootProp('--r', r);
 		updateRootProp('--g', g);
 		updateRootProp('--b', b);
