@@ -1,9 +1,17 @@
 <script>
+  import { createEventDispatcher, onMount } from "svelte";
+  import { remap, roundStep } from "../utils/general";
+
+  const dispatch = createEventDispatcher();
+
   export let color;
-  export let value;
-  
+  export let value = 0;
+  export let step = 1;
+  export let range = [0, 100];
+
   let sliderEl;
-  let pos = value;
+  let pos = ~~remap(value, range, [0, 100]);
+
   let isDragging = false;
 
   function handleMouseDown(e) {
@@ -28,7 +36,11 @@
     const percentage = mousePos / totalWidth;
     const clampedPerc = Math.max(Math.min(percentage * 100, 100), 0);
 
-    value = pos = clampedPerc;
+    pos = clampedPerc;
+    console.log(pos)
+    value = roundStep(percentage * range[1] + range[0], step);
+
+    dispatch('input', value);
   }
 </script>
 

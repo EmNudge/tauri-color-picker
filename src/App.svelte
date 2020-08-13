@@ -30,7 +30,7 @@
 </script>
 
 <main>
-	<ColorSliders/>
+	<ColorSliders bind:r={$r} bind:g={$g} bind:b={$b} />
 
 	<Output />
 </main>
