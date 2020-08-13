@@ -33,8 +33,8 @@
   }
 
   $: hueBg = getBg(10, i => `hsl(${360/9 * i}, ${s}%, ${l}%)`);
-  $: satBg = getBg(10, i => `hsl(${h}, ${360/9 * i}%, ${l}%)`);
-  $: lightBg = getBg(10, i => `hsl(${h}, ${s}%, ${360/9 * i}%)`);
+  $: satBg = getBg(10, i => `hsl(${h}, ${100/9 * i}%, ${l}%)`);
+  $: lightBg = getBg(10, i => `hsl(${h}, ${s}%, ${100/9 * i}%)`);
 </script>
 
 <div class="hsl">
