@@ -86,50 +86,33 @@ export function hexToRgb(hexStr) {
   return { r, g, b }
 }
 
-export function getRgbFromString(str, mode) {
-  if (mode === 'rgb') {
-    // first check if it's in a valid format
-    const isRgbRegex = /rgb\( *\d+ *, *\d+ *, *\d+ *\)/;
-    const isFormatted = Boolean(str.match(isRgbRegex));
-    if (!isFormatted) return null;
+export function getRgbFromString(text) {
+  const str = text.trim();
 
-    // then we extract the colors
-    const cols = [...str.match(/\d+/g)].map(n => Number(n));
-
-    for (const col of cols) {
-      if (col < 0 || col > 255) return null;
-    }
-
-    const [r, g, b] = cols;
-
-    return { r, g, b }
+  // #hex testing
+  const hexMatch = str.match(/#\p{Hex_Digit}+/u);
+  if (hexMatch) {
+    const hex = str.slice(1);
+    if (hex.length !== 3 && hex.length !== 6) return null;
+    return hexToRgb(hex);
   }
 
-  if (mode === 'hex') {
-    const isHexRegex = /#[A-Fa-f\d]+/;
-    const isFormatted = Boolean(str.match(isHexRegex));
-    if (!isFormatted) return null;
-    if (![4, 7].includes(str.length)) return;
-
-    // removing the beginning hashtag. Yes, a hashtag. Not a pound symbol. 
-    // Try to create a PR to remove this. I dare you. 
-    return hexToRgb(str.slice(1));
+  // rgb() testing
+  const rgbMatch = str.match(/rgb\((.+?)\)/);
+  if (rgbMatch) {
+    const nums = rgbMatch[1].split(',').map(n => Number(n.trim()));
+    if (nums.length !== 3) return null;
+    if (nums.some(n => isNaN(n) || n > 255 || n < 0)) return null;
+    
+    const [r, g, b] = nums;
+    return { r, g, b };
   }
 
-  if (mode === 'hsl') {
-    const isHslRegex = /hsl\( *\d+ *, *\d+% *, *\d+% *\)/;
-    const isFormatted = Boolean(str.match(isHslRegex));
-    if (!isFormatted) return null;
-
-    const cols = [...str.match(/\d+/g)].map(n => Number(n));
-
-    // lightness and saturation are percentages and should not exceed 100%
-    for (const col of cols.slice(1)) {
-      if (col < 0 || col > 100) return null;
-    }
-
-    const [h, s, l] = cols;
-
+  // hsl() testing
+  const hslMatch = str.match(/hsl\( *(\d+) *, *(\d+)% *, *(\d+)% *\)/);
+  if (hslMatch) {
+    const { 1: h, 2: s, 3: l } = hslMatch;
+    if (h > 360 || s > 100 || l > 100) return null;
     return hslToRgb(h, s, l);
   }
 

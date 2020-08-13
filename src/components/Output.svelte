@@ -17,10 +17,8 @@
     }
   }
 
-  function checkResult(e) {
-    const col = e.target.value;
-
-    const rgb = getRgbFromString(col, mode);
+  function checkResult(_e) {
+    const rgb = getRgbFromString(color);
     if (!rgb) return;
     
     const { r: red, g: green, b: blue } = rgb;
