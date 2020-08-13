@@ -63,7 +63,7 @@ export function hslToRgb(h, s, l) {
     if (hue < 360) return [c, 0, x];
   }
 
-  const [r, g, b] = getRgb(h % 360).map(n => (n + m) * 255);
+  const [r, g, b] = getRgb(h % 360).map(n => ~~((n + m) * 255));
 
   return { r, g, b }
 }

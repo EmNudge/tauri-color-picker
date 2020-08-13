@@ -37,7 +37,6 @@
     const clampedPerc = Math.max(Math.min(percentage * 100, 100), 0);
 
     pos = clampedPerc;
-    console.log(pos)
     value = roundStep(percentage * range[1] + range[0], step);
 
     dispatch('input', value);

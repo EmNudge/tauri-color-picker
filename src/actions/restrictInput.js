@@ -4,7 +4,6 @@ export default function restrictInput(node, restrictFunc) {
 	function handleInput(e) {
     const val = e.target.value
 
-    console.log({val, lastGoodValue})
 		if (restrictFunc(val)) {
 			lastGoodValue = val;
 			return;

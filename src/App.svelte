@@ -5,14 +5,15 @@
 	import { getRgbLightness, rgbToHex } from './utils/color';
 	import Output from './components/Output.svelte';
 	import ColorSliders from './components/ColorSliders.svelte';
-	import { r, g, b } from './stores/color';
+	import { ColorMaster } from './stores/color';
 
-	function updateColors(r, g, b) {
+	ColorMaster.rgb.subscribe(({ r, g, b}) => {
 		updateRootProp('--r', r);
 		updateRootProp('--g', g);
 		updateRootProp('--b', b);
-	}
-	updateColors($r, $g, $b);
+
+		updateLightness(r, g, b)
+	})
 
 	function updateLightness(r, g, b) {
 		const lightness = getRgbLightness(r, g, b);
@@ -22,15 +23,10 @@
 		}
 		toDarkMode();
 	}
-	
-	$: {
-		updateColors($r, $g, $b);
-		updateLightness($r, $g, $b);
-	}
 </script>
 
 <main>
-	<ColorSliders bind:r={$r} bind:g={$g} bind:b={$b} />
+	<ColorSliders />
 
 	<Output />
 </main>
