@@ -3,13 +3,20 @@
   import { rgbToHsl, rgbToHex, getRgbFromString } from '../utils/color'
   import IterButton from './IterButton.svelte';
   import { ColorMaster } from '../stores/color';
+import { derived } from 'svelte/store';
 
   let color = 'rgb(0, 0, 0)';
   let mode = 'rgb';
+  let rgb;
+  let hsl;
+  
+  // note this will run twice when colors change.
+  ColorMaster.colors.subscribe(colors => {
+    rgb = colors.rgb;
+    hsl = colors.hsl;
+  });
 
-  // note this will run twice. Any change to colors will change both rgb and hex.
-  // since this is a derived store, it will run subscribe once for each change.
-  ColorMaster.colors.subscribe(({rgb, hsl}) => {
+  $: {
     const { r, g, b } = rgb;
     if (mode === 'hex') {
       color = rgbToHex(r, g, b);
@@ -19,7 +26,7 @@
       const { h, s, l } = hsl;
       color = `hsl(${h % 360}, ${s}%, ${l}%)`;
     }
-  });
+  }
 
   function checkResult(_e) {
     const rgb = getRgbFromString(color);
