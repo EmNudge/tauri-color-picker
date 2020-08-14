@@ -1,18 +1,22 @@
 <script>
   import restrictInput from "../actions/restrictInput";
+  import { createEventDispatcher } from "svelte";
+
+  const dispatch = createEventDispatcher();
 
   export let value = 0;
   export let range = [-Infinity, Infinity];
 
   function restrictor(val) {
     if (isNaN(Number(val))) return false;
-    return val > range[0] && val < range[1];
+    return val >= range[0] && val <= range[1];
   }
 
   function handleKeyDown(e) {
     if (!e.key.includes("Arrow")) return;
     if (e.key === "ArrowUp") value++;
     if (e.key === "ArrowDown") value--;
+    dispatch('input');
   }
 </script>
 
