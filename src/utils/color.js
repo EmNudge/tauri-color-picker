@@ -40,7 +40,7 @@ export function rgbToHsl(r, g, b) {
   const hue = Math.round(60 * getHue());
 
   return  {
-    h: hue < 0 ? 360 - hue : hue,
+    h: hue < 0 ? 360 + hue : hue,
     s: Math.round(getSaturation() * 100),
     l: Math.round(lightness * 100),
   };
