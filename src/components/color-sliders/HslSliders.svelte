@@ -5,12 +5,14 @@
   let h;
   let s;
   let l;
-  $: {
-    const { hsl } = $colorStore;
+
+  colorStore.subscribe(color => {
+    const { hsl } = color;
+
     h = hsl.h;
     s = hsl.s;
     l = hsl.l;
-  }
+  });
 
   function updateColor() {
     setHsl(h, s, l);

@@ -5,12 +5,14 @@
   let r;
   let g;
   let b;
-  $: {
-    const { rgb } = $colorStore;
+  
+  colorStore.subscribe(color => {
+    const { rgb } = color;
+
     r = rgb.r;
     g = rgb.g;
     b = rgb.b;
-  }
+  });
 
   function updateColor() {
     setRgb(r, g, b);

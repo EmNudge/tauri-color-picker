@@ -10,7 +10,7 @@
   export let range = [0, 100];
 
   let sliderEl;
-  let pos = ~~remap(value, range, [0, 100]);
+  $: pos = ~~remap(value, range, [0, 100]);  
 
   let isDragging = false;
 
