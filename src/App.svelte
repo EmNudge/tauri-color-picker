@@ -1,6 +1,4 @@
 <script>
-	import ColorSlider from './components/ColorSlider.svelte'
-	import Input from './components/Input.svelte'
 	import { updateRootProp, toDarkMode, toLightMode } from './utils/cssVar';
 	import { getRgbLightness, rgbToHex } from './utils/color';
 	import Output from './components/Output.svelte';

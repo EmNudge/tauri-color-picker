@@ -9,8 +9,10 @@
   export let step = 1;
   export let range = [0, 100];
 
+  const HANDLE_WIDTH = 20;
+
   let sliderEl;
-  $: pos = ~~remap(value, range, [0, 100]);  
+  $: pos = remap(value, range, [0, 100]);
 
   let isDragging = false;
 
@@ -29,14 +31,11 @@
   }
 
   function updatePos(e) {
-    const HANDLE_WIDTH = 20;
-
     const mousePos = e.clientX - HANDLE_WIDTH/2 - sliderEl.offsetLeft;
     const totalWidth = sliderEl.offsetWidth;
     const percentage = mousePos / totalWidth;
     const clampedPerc = Math.max(Math.min(percentage * 100, 100), 0);
 
-    pos = clampedPerc;
     value = roundStep(percentage * range[1] + range[0], step);
 
     dispatch('input', value);
