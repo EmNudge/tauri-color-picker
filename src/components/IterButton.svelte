@@ -1,12 +1,12 @@
 <script>
   export let arr = ['button'];
   export let value = arr[0];
-
+  
   function* InfIter() {
+    yield* arr.slice(1);
     while (true) yield* arr;
   }
   const iter = InfIter();
-
 
   function moveIter() {
     value = iter.next().value;

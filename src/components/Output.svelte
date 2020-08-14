@@ -5,8 +5,8 @@
   import { colorStore, setRgb } from '../stores/color';
   import { objEquals } from '../utils/general';
 
-  let color = 'rgb(0, 0, 0)';
-  let mode = 'rgb';
+  let color = '#000';
+  let mode = 'hex';
   let rgb;
   let hsl;
 

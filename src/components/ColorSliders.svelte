@@ -8,7 +8,7 @@
 </script>
 
 <div class="colors">
-  <IterButton arr={['hsl', 'rgb']} bind:value={mode} />
+  <IterButton arr={['rgb', 'hsl']} bind:value={mode} />
   {#if mode === 'hsl'}
     <HslSliders />
   {:else if mode === 'rgb'}
