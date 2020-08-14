@@ -2,7 +2,6 @@
   import IterButton from './IterButton.svelte';
   import HslSliders from './color-sliders/HslSliders.svelte';
   import RgbSliders from './color-sliders/RgbSliders.svelte';
-  import { hslToRgb, rgbToHsl } from '../utils/color'
 
   let mode = 'rgb';
 </script>

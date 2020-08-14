@@ -1,9 +1,8 @@
 <script>
   import Input from './Input.svelte';
-  import { rgbToHsl, rgbToHex, getRgbFromString } from '../utils/color'
+  import { rgbToHex, getRgbFromString } from '../utils/color'
   import IterButton from './IterButton.svelte';
   import { colorStore, setRgb } from '../stores/color';
-  import { objEquals } from '../utils/general';
 
   let color = '#000';
   let mode = 'hex';
@@ -12,8 +11,6 @@
 
   let stopColorEdit = false;
   
-  let unsubscribe
-  // note this will run twice when colors change.
   colorStore.subscribe(colors => {
     if (stopColorEdit) {
       stopColorEdit = false;

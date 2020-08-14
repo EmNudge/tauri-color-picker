@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher, onMount } from "svelte";
+  import { createEventDispatcher } from "svelte";
   import { remap, roundStep } from "../utils/general";
 
   const dispatch = createEventDispatcher();

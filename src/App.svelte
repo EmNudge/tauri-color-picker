@@ -1,6 +1,6 @@
 <script>
 	import { updateRootProp, toDarkMode, toLightMode } from './utils/cssVar';
-	import { getRgbLightness, rgbToHex } from './utils/color';
+	import { getRgbLightness } from './utils/color';
 	import Output from './components/Output.svelte';
 	import ColorSliders from './components/ColorSliders.svelte';
 	import { colorStore } from './stores/color';
@@ -13,7 +13,7 @@
 		updateRootProp('--b', b);
 
 		updateLightness(r, g, b)
-	})
+	});
 
 	function updateLightness(r, g, b) {
 		const lightness = getRgbLightness(r, g, b);

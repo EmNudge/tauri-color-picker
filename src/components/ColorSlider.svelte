@@ -1,8 +1,6 @@
 <script>
   import Slider from './Slider.svelte';
   import NumberInput from './NumberInput.svelte';
-  import { createEventDispatcher } from 'svelte';
-  import { remap } from '../utils/general';
   
   export let color;
   export let value = 0;
