@@ -1,6 +1,6 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import { remap, roundStep } from "../utils/general";
+  import { remap, roundStep, clamp } from "../utils/general";
 
   const dispatch = createEventDispatcher();
 
@@ -34,9 +34,10 @@
     const mousePos = e.clientX - HANDLE_WIDTH/2 - sliderEl.offsetLeft;
     const totalWidth = sliderEl.offsetWidth;
     const percentage = mousePos / totalWidth;
-    const clampedPerc = Math.max(Math.min(percentage * 100, 100), 0);
+    const clampedPerc = clamp(percentage * 100, [0, 100]);
 
-    value = roundStep(percentage * range[1] + range[0], step);
+    const val = roundStep(percentage * range[1] + range[0], step);
+    value = clamp(val, range);
 
     dispatch('input', value);
   }

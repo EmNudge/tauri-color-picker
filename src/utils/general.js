@@ -5,6 +5,9 @@ export const remap = (val, range1, range2) => {
   return percentage * (range2[1] - range2[0]) + range2[0];
 } 
 
+// returns the value or the closest range end if value falls outside of range
+export const clamp = (val, range) => Math.max(Math.min(val, range[1]), range[0]);
+
 // gets the power of 10 to convert a decimal to an integer
 const getIntPower = (num) => num >= 1 ? 0 : ~~-Math.log10(num) + 1;
 
