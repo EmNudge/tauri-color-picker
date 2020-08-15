@@ -4,7 +4,8 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "start": "sirv public"
+    "start": "sirv public",
+    "tauri": "tauri"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^11.0.0",
@@ -16,6 +17,7 @@
     "svelte": "^3.0.0"
   },
   "dependencies": {
-    "sirv-cli": "^0.4.4"
+    "sirv-cli": "^0.4.4",
+    "tauri": "^0.11.1"
   }
 }
